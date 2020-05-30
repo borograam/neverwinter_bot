@@ -27,15 +27,16 @@ class TelegramUser(models.Model):
         try:
             obj = cls.objects.get(chat_id=api_user.id)
         except cls.DoesNotExist:
-            user = User.objects.create(first_name=api_user.first_name,
-                                       last_name=api_user.last_name,
-                                       username=uuid.uuid4())
+            #user = User.objects.create(first_name=api_user.first_name,
+            #                           last_name=api_user.last_name,
+            #                           username=uuid.uuid4())
+            user = User.objects.create(username=uuid.uuid4())
             obj = cls.objects.create(django=user, chat_id=api_user.id)
             created = True
 
-        obj.first_name = api_user.first_name
-        obj.last_name = api_user.last_name
-        obj.link = api_user.link
+        # obj.first_name = api_user.first_name
+        # obj.last_name = api_user.last_name
+        # obj.link = api_user.link
         obj.name = api_user.name
         obj.save()
 
@@ -91,7 +92,7 @@ class InfluenceCollection(models.Model):
 
         scheduler = Scheduler(connection=Redis())
         # TODO: change time delta to 8 hours
-        job = scheduler.enqueue_in(timezone.timedelta(seconds=1), notification, obj.pk)
+        job = scheduler.enqueue_in(timezone.timedelta(hours=8), notification, obj.pk)
         logger.info('InfluenceCollection pk {}: enqueue job to scheduler'.format(obj.pk))
         obj.notification_job_id = job.id
         obj.save()

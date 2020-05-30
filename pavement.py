@@ -25,7 +25,7 @@ def runbot():
 @needs(['prepare_ignored_files'])
 def runserver():
     """run django development server"""
-    sh("./manage.py runserver")
+    sh("./manage.py runserver 10.10.0.1:8000")
 
 
 @task

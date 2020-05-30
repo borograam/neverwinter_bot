@@ -16,7 +16,7 @@ class GuildAdmin(admin.ModelAdmin):
 
 @admin.register(InfluenceCollection)
 class InfluenceCollectionAdmin(admin.ModelAdmin):
-    list_display = ('in_guild', 'at', 'waiting_to_notify', 'notified')
+    list_display = ('in_guild', 'by', 'at', 'waiting_to_notify', 'notified')
     list_filter = ('waiting_to_notify', 'notified')
     search_fields = ['in_guild__name']
 
