@@ -23,14 +23,18 @@ def runbot():
 
 @task
 @needs(['prepare_ignored_files'])
-def runserver():
+@cmdopts([
+    ('development', 'd', 'is it a development running')
+])
+def runserver(options):
     """run django development server"""
-    sh("./manage.py runserver 10.10.0.1:8000")
+    addr = "10.10.0.1:8000" if not options.development else ""
+    sh("./manage.py runserver {}".format(addr))
 
 
 @task
 def runscheduler():
-    """run rq-sheduler"""
+    """run rq-scheduler"""
     sh("./manage.py rqscheduler")
 
 
